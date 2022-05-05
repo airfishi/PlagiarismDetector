@@ -1,31 +1,53 @@
 package plagdetect;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 
 public class PlagiarismDetector implements IPlagiarismDetector {
 	
+	File currDocs = new File("B://CS 220 HOMEWORK/cs220-plagiarism-detector/docs/smalldocs");
+	int n; 
+	
 	public PlagiarismDetector(int n) {
-		// TODO implement this method
+		this.n = n;
 	}
 	
 	@Override
 	public int getN() {
-		// TODO Auto-generated method stub
-		return 0;
+		return n;
 	}
 
 	@Override
 	public Collection<String> getFilenames() {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<String> toRet = new LinkedList<>();
+		for(File file : currDocs.listFiles()) {
+			toRet.add(file.getName());
+		}
+		//System.out.println(toRet);
+		return toRet;
 	}
 
 	@Override
 	public Collection<String> getNgramsInFile(String filename) {
-		// TODO Auto-generated method stub
+		Set<String> ngrams = new HashSet<>();
+		
+		//create scanner for file
+		try {
+			Scanner scan = new Scanner(new FileInputStream(filename));
+			scan.
+		
+		} catch(IOException e) {
+			throw new RuntimeException(e);
+			
+		}
+		
 		return null;
 	}
 
