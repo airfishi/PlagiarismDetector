@@ -2,6 +2,7 @@ package plagdetect;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,8 +16,10 @@ import java.util.Set;
 public class PlagiarismDetector implements IPlagiarismDetector {
 	
 	String currDocs = "tinyDocs";
-	File currPath = new File("B://CS 220 HOMEWORK/CS220 Plagiarism Detector/cs220-plagiarism-detector/docs/" + currDocs);
-
+	//on Desktop
+	//File currPath = new File("B://CS 220 HOMEWORK/CS220 Plagiarism Detector/cs220-plagiarism-detector/docs/" + currDocs);
+	//on Laptop
+	File currPath = new File("D://CS 220 HOMEWORK/PlagiarismDetector/docs/" + currDocs);
 	int n; 
 	
 	public PlagiarismDetector(int n) {
@@ -40,44 +43,63 @@ public class PlagiarismDetector implements IPlagiarismDetector {
 
 	@Override
 	public Collection<String> getNgramsInFile(String filename) {
+		
 		Set<String> ngrams = new HashSet<>();
 		
-		Path file = Path.of(currPath.toString() + "/" + filename); 
-		String doc = "";
-		System.out.println(file.toString());
+		//find first space
+		//add string before to toAdd
+		//repeat n-1 times
+		
+		
 		try {
-			doc = Files.readString(file);
-			
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println(doc);
-		
-		//add substring from 0 to nth space
-		//string gets substring from first space to end
-		
-		
-		
-		//create scanner for file
-		/*try {
 			Scanner scan = new Scanner(new FileInputStream(filename));
-			int x = 0;
-			while(x <3) {
-				scan.nex()
+			Path file = Path.of(currPath.toString() + "/"+ filename);
+			String doc = Files.readString(file);
+			
+			//count number of spaces in doc
+			int numSpaces = 0;
+			while(doc.indexOf(" ") > 0) {
+				numSpaces++;
 			}
+			
+			//while the number of spaces is greater than or equal to the 
+			//number of spaces in an ngram (n-1), get the first n words, aka
+			//find the number of strings with n-1 spaces in, and add them to
+			//ngrams then do the same process starting at the next word in the
+			//doc until the number of words left is less than the size of
+			//an ngram (until there are n-1 spaces left
+			
+			
+			String tempDoc = doc;
+			for(int i = 0; i < numSpaces - n + 1; i++) {
+				int j = 1;
+				String toAdd = "";
+				
+				while(j < n) {
+					int cut = tempDoc.indexOf(" ");
+					toAdd += tempDoc.substring(0,cut);
+					tempDoc = tempDoc.substring(cut + 1);
+					j++;
+				}
+				
+				ngrams.add(toAdd);
+				tempDoc = doc.substring(doc.indexOf(" "));
+			}
+			
 		
 		} catch(IOException e) {
 			throw new RuntimeException(e);
 			
 		}
-		*/
-		return null;
+		System.out.println(ngrams);
+		
+		return ngrams;
 	}
 
 	@Override
 	public int getNumNgramsInFile(String filename) {
-		// TODO Auto-generated method stub
-		return 0;
+		//TODO
+		return getNgramsInFile(filename).size();
 	}
 
 	@Override
