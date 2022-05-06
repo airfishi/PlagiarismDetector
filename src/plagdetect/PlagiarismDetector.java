@@ -18,9 +18,9 @@ public class PlagiarismDetector implements IPlagiarismDetector {
 	
 	String currDocs = "tinyDocs";
 	//on Desktop
-	//File currPath = new File("B://CS 220 HOMEWORK/CS220 Plagiarism Detector/cs220-plagiarism-detector/docs/" + currDocs);
+	File currPath = new File("B://CS 220 HOMEWORK/CS220 Plagiarism Detector/cs220-plagiarism-detector/");
 	//on Laptop
-	File currPath = new File("D://CS 220 HOMEWORK/PlagiarismDetector/");
+	//File currPath = new File("D://CS 220 HOMEWORK/PlagiarismDetector/");
 	int n = 3; 
 	
 	Map<String,Set<String>> docToNgrams = new HashMap<>();
@@ -61,6 +61,15 @@ public class PlagiarismDetector implements IPlagiarismDetector {
 	@Override
 	public Map<String, Map<String, Integer>> getResults() {
 		// TODO Auto-generated method stub
+		
+		for(String f1 : docToNgrams.keySet()) {
+			for(String f2: docToNgrams.keySet()) {
+				if(!f1.equals(f2)) {
+					
+				}
+			}
+		}
+		
 		return null;
 	}
 
@@ -146,13 +155,13 @@ public class PlagiarismDetector implements IPlagiarismDetector {
 
 	@Override
 	public Collection<String> getSuspiciousPairs(int minNgrams) {
-		// TODO Auto-generated method stub
+		// TODO fix bug
 		
 		//for key in docsToNgrams, compare to all files not yet compared to
 		//if they contain
 		
 		//System.out.println(docToNgrams.keySet());
-		Collection<String> pairs = new LinkedList<>();
+		Collection<String> pairs = new HashSet<>();
 		for(String file1 : docToNgrams.keySet()) {
 			for(String file2 : docToNgrams.keySet()) {
 				if(!file1.equals(file2)) {
@@ -163,9 +172,16 @@ public class PlagiarismDetector implements IPlagiarismDetector {
 			}
 		}
 		
-		System.out.println(pairs);
-		System.out.println(docToNgrams.get("2981.txt"));
-		System.out.println(docToNgrams.get("2986.txt"));
+		//TODO currently working on why these docs don't appear when this is run
+		/*
+		int j = 0;
+		for(String x : docToNgrams.get("2994.txt")) {
+			if(docToNgrams.get("2989.txt").contains(x)) {
+				j++;
+			}
+		}
+		System.out.println(j);
+		*/
 		
 		return pairs;
 	}
