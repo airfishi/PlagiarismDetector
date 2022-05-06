@@ -1,26 +1,22 @@
 package plagdetect;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 
 public class PlagiarismDetector implements IPlagiarismDetector {
 	
 	String currDocs = "tinyDocs";
 	//on Desktop
-	File currPath = new File("B://CS 220 HOMEWORK/CS220 Plagiarism Detector/cs220-plagiarism-detector/");
+	//File currPath = new File("B://CS 220 HOMEWORK/CS220 Plagiarism Detector/cs220-plagiarism-detector/");
 	//on Laptop
-	//File currPath = new File("D://CS 220 HOMEWORK/PlagiarismDetector/");
+	File currPath = new File("D://CS 220 HOMEWORK/PlagiarismDetector/");
 	int n = 3; 
 	
 	Map<String,Set<String>> docToNgrams = new HashMap<>();
@@ -164,7 +160,7 @@ public class PlagiarismDetector implements IPlagiarismDetector {
 		Collection<String> pairs = new HashSet<>();
 		for(String file1 : docToNgrams.keySet()) {
 			for(String file2 : docToNgrams.keySet()) {
-				if(!file1.equals(file2)) {
+				if(file1.compareTo(file2) > 0) {
 					if(getNumNGramsInCommon(file1,file2) == minNgrams || getNumNGramsInCommon(file1,file2) > minNgrams) {
 						pairs.add(file1 + " " + file2 + " " + getNumNGramsInCommon(file1,file2));
 					}
