@@ -147,7 +147,27 @@ public class PlagiarismDetector implements IPlagiarismDetector {
 	@Override
 	public Collection<String> getSuspiciousPairs(int minNgrams) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		//for key in docsToNgrams, compare to all files not yet compared to
+		//if they contain
+		
+		//System.out.println(docToNgrams.keySet());
+		Collection<String> pairs = new LinkedList<>();
+		for(String file1 : docToNgrams.keySet()) {
+			for(String file2 : docToNgrams.keySet()) {
+				if(!file1.equals(file2)) {
+					if(getNumNGramsInCommon(file1,file2) == minNgrams || getNumNGramsInCommon(file1,file2) > minNgrams) {
+						pairs.add(file1 + " " + file2 + " " + getNumNGramsInCommon(file1,file2));
+					}
+				}
+			}
+		}
+		
+		System.out.println(pairs);
+		System.out.println(docToNgrams.get("2981.txt"));
+		System.out.println(docToNgrams.get("2986.txt"));
+		
+		return pairs;
 	}
 
 	@Override

@@ -51,8 +51,7 @@ public class TestSmallDocs
         makeDetector(3);
         Collection<String> pairs = detector.getSuspiciousPairs(10);
         for (String s : pairs) System.out.println(s);
-        assertTrue(pairs.contains("2985.txt 2988.txt 10"));
-        assertTrue(pairs.contains("2981.txt 2986.txt 16"));
+
         assertTrue(pairs.contains("2986.txt 2991.txt 11"));
         assertTrue(pairs.contains("2986.txt 2995.txt 11"));
         assertTrue(pairs.contains("2989.txt 2994.txt 10"));
@@ -60,6 +59,9 @@ public class TestSmallDocs
         assertTrue(pairs.contains("2985.txt 2995.txt 14"));
         assertTrue(pairs.contains("2991.txt 2993.txt 11"));
         assertTrue(pairs.contains("2987.txt 2994.txt 10"));
+        assertTrue(pairs.contains("2985.txt 2988.txt 10"));
+        assertTrue(pairs.contains("2981.txt 2986.txt 16"));
+
     }
 
     
