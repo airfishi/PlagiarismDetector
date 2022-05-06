@@ -20,7 +20,7 @@ public class PlagiarismDetector implements IPlagiarismDetector {
 	//File currPath = new File("B://CS 220 HOMEWORK/CS220 Plagiarism Detector/cs220-plagiarism-detector/docs/" + currDocs);
 	//on Laptop
 	File currPath = new File("D://CS 220 HOMEWORK/PlagiarismDetector/docs/" + currDocs);
-	int n; 
+	int n = 3; 
 	
 	public PlagiarismDetector(int n) {
 		this.n = n;
@@ -51,54 +51,73 @@ public class PlagiarismDetector implements IPlagiarismDetector {
 		//repeat n-1 times
 		
 		
-		try {
-			Scanner scan = new Scanner(new FileInputStream(filename));
+
+			//Scanner scan = new Scanner(new FileInputStream(filename));
 			Path file = Path.of(currPath.toString() + "/"+ filename);
-			String doc = Files.readString(file);
-			
-			//count number of spaces in doc
-			int numSpaces = 0;
-			while(doc.indexOf(" ") > 0) {
-				numSpaces++;
-			}
-			
-			//while the number of spaces is greater than or equal to the 
-			//number of spaces in an ngram (n-1), get the first n words, aka
-			//find the number of strings with n-1 spaces in, and add them to
-			//ngrams then do the same process starting at the next word in the
-			//doc until the number of words left is less than the size of
-			//an ngram (until there are n-1 spaces left
-			
-			
-			String tempDoc = doc;
-			for(int i = 0; i < numSpaces - n + 1; i++) {
-				int j = 1;
-				String toAdd = "";
-				
-				while(j < n) {
-					int cut = tempDoc.indexOf(" ");
-					toAdd += tempDoc.substring(0,cut);
-					tempDoc = tempDoc.substring(cut + 1);
-					j++;
+			try {
+				String doc = Files.readString(file);
+				System.out.println(doc);
+				//count number of spaces in doc
+				int numSpaces = 0;
+				String tempDoc = doc;
+				while(tempDoc.indexOf(" ") > 0) {
+					numSpaces++;
+					tempDoc = tempDoc.substring(tempDoc.indexOf(" ") + 1);
 				}
+				System.out.println("Number of spaces : " +  numSpaces + " N is : " + n);
 				
-				ngrams.add(toAdd);
-				tempDoc = doc.substring(doc.indexOf(" "));
+				//while the number of spaces is greater than or equal to the 
+				//number of spaces in an ngram (n-1), get the first n words, aka
+				//find the number of strings with n-1 spaces in, and add them to
+				//ngrams then do the same process starting at the next word in the
+				//doc until the number of words left is less than the size of
+				//an ngram (until there are n-1 spaces left
+				
+				
+				//tempDoc = doc;
+				for(int i = 0; i < numSpaces -1; i++) {
+					
+					String toAdd = "";
+					tempDoc = doc;
+					
+					for(int j = 0; j < n; j++) {
+						if(i + n - 1 < numSpaces) {
+							int cut = tempDoc.indexOf(" ") + 1;
+							toAdd += tempDoc.substring(0,cut);
+							tempDoc = tempDoc.substring(cut);
+						} else if(doc.charAt(0) == ' ') {
+							toAdd = doc.substring(1);
+						} else {
+							toAdd = doc;
+						}
+
+					}
+					if(toAdd.charAt(toAdd.length()-1) == ' ')
+						toAdd = toAdd.substring(0,toAdd.length()-1);
+					System.out.println(toAdd);
+					ngrams.add(toAdd);
+					if(i + n -1< numSpaces) {
+						doc = doc.substring(doc.indexOf(" ") + 1);
+				
+					}else if(doc.charAt(0) == ' '){
+						doc = doc.substring(1,doc.length());
+					} else
+						doc = doc.substring(0,doc.length());
+					//System.out.println(doc);
+				}	
+			} catch(IOException e) {
+				throw new RuntimeException();
 			}
 			
-		
-		} catch(IOException e) {
-			throw new RuntimeException(e);
 			
-		}
-		System.out.println(ngrams);
+		System.out.println(ngrams + "\n");
 		
 		return ngrams;
 	}
 
 	@Override
 	public int getNumNgramsInFile(String filename) {
-		//TODO
+
 		return getNgramsInFile(filename).size();
 	}
 
