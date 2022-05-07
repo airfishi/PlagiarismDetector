@@ -109,6 +109,7 @@ public interface IPlagiarismDetector
      * @throws IOException
      */
     void readFile(File file) throws IOException;
+    void readFileOriginal(File file) throws IOException;
     
     /**
      * Given the names of two files,
